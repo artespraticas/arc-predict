@@ -29,11 +29,12 @@ export function BetModal({ market, onClose }: BetModalProps) {
   const { writeContractAsync } = useWriteContract();
 
   const total = market.totalYes + market.totalNo;
-  const yesPct =
-    total === 0n
-      ? 50
-      : Math.round((Number(market.totalYes) / Number(total)) * 100);
-  const noPct = 100 - yesPct;
+const totalNum = Number(total);
+const yesPct =
+  totalNum === 0
+    ? 50
+    : Math.round((Number(market.totalYes) / totalNum) * 100);
+const noPct = 100 - yesPct;
 
   const amountBigInt = (() => {
     try {
