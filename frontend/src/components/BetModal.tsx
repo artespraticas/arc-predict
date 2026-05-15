@@ -1,7 +1,7 @@
 "use client";
 
 import { useState } from "react";
-import { X, AlertCircle, CheckCircle2, ExternalLink, Zap } from "lucide-react";
+import { useAccount, useWriteContract } from "wagmi";
 import { useAccount, useWriteContract } from "wagmi";
 import { parseUnits } from "viem";
 import { ABI, USDC_ABI, CONTRACT_ADDRESS, USDC_ADDRESS, DEMO_MARKETS } from "@/lib/contract";
