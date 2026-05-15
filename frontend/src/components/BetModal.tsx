@@ -1,11 +1,10 @@
 "use client";
 
 import { useState } from "react";
+import { X, AlertCircle, CheckCircle2, ExternalLink, Zap } from "lucide-react";
 import { useAccount, useWriteContract } from "wagmi";
 import { parseUnits } from "viem";
-import { ABI, USDC_ABI, CONTRACT_ADDRESS, USDC_ADDRESS, DEMO_MARKETS } from "@/lib/contract";
-
-interface BetModalProps {
+import { ABI, USDC_ABI, CONTRACT_ADDRESS, USDC_ADDRESS, DEMO_MARKETS } from "@/lib/contract";interface BetModalProps {
   market: (typeof DEMO_MARKETS)[0];
   onClose: () => void;
 }
