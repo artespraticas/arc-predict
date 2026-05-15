@@ -4,7 +4,9 @@ import { useState } from "react";
 import { X, AlertCircle, CheckCircle2, ExternalLink, Zap } from "lucide-react";
 import { useAccount, useWriteContract } from "wagmi";
 import { parseUnits } from "viem";
-import { ABI, USDC_ABI, CONTRACT_ADDRESS, USDC_ADDRESS, DEMO_MARKETS } from "@/lib/contract";interface BetModalProps {
+import { ABI, USDC_ABI, CONTRACT_ADDRESS, USDC_ADDRESS, DEMO_MARKETS } from "@/lib/contract";
+
+interface BetModalProps {
   market: (typeof DEMO_MARKETS)[0];
   onClose: () => void;
 }
@@ -60,14 +62,14 @@ export function BetModal({ market, onClose }: BetModalProps) {
         abi: USDC_ABI,
         functionName: "approve",
         args: [CONTRACT_ADDRESS as `0x${string}`, amountBigInt],
-      });
+      } as any);
       setStep("betting");
       const betTx = await writeContractAsync({
         address: CONTRACT_ADDRESS as `0x${string}`,
         abi: ABI,
         functionName: "placeBet",
         args: [market.id, side === "yes", amountBigInt],
-      });
+      } as any);
       setTxHash(betTx);
       setStep("success");
     } catch (err) {
@@ -142,13 +144,13 @@ export function BetModal({ market, onClose }: BetModalProps) {
               </div>
               <div className="bg-arc-bg border border-arc-border rounded-sm p-3 flex justify-between items-center">
                 <span className="text-xs text-arc-muted font-mono">Est. payout if correct</span>
-                <span className="text-arc-gold font-mono font-medium text-sm">{formatUSDC(estimatedPayout)} <span className="text-arc-muted text-xs">({multiplier}×)</span></span>
+                <span className="text-arc-gold font-mono font-medium text-sm">{formatUSDC(estimatedPayout)} <span className="text-arc-muted text-xs">({multiplier}x)</span></span>
               </div>
-              <p className="text-xs text-arc-muted font-body">📋 Resolution source: <span className="text-arc-text">{market.resolutionSource}</span></p>
+              <p className="text-xs text-arc-muted font-body">Resolution source: <span className="text-arc-text">{market.resolutionSource}</span></p>
               <button onClick={handleBet} disabled={step === "approving" || step === "betting" || amountBigInt === ZERO}
                 className={`w-full py-3.5 rounded-sm text-sm font-medium flex items-center justify-center gap-2 transition-all ${side === "yes" ? "bg-arc-green/15 hover:bg-arc-green/25 border border-arc-green/40 text-arc-green" : "bg-arc-red/15 hover:bg-arc-red/25 border border-arc-red/40 text-arc-red"} disabled:opacity-50 disabled:cursor-not-allowed`}>
-                {step === "approving" ? <><Zap className="w-4 h-4 animate-pulse" />Approving USDC...</>
-                  : step === "betting" ? <><Zap className="w-4 h-4 animate-pulse" />Placing Bet...</>
+                {step === "approving" ? <><Zap className="w-4 h-4 animate-pulse" /> Approving USDC...</>
+                  : step === "betting" ? <><Zap className="w-4 h-4 animate-pulse" /> Placing Bet...</>
                   : <>Bet {formatUSDC(amountBigInt)} on {side.toUpperCase()}</>}
               </button>
               {!isConnected && <p className="text-center text-xs text-arc-muted">Connect your wallet above to place bets</p>}
